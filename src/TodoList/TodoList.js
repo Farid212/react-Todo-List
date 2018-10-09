@@ -7,7 +7,6 @@ import {
     Form,
     FormControl,
  } from 'react-bootstrap';
-//  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FontAwesomeIcon from 'react-fontawesome';
 
 class TodoList extends Component{
