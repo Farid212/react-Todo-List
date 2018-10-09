@@ -1,5 +1,4 @@
 import React, {Component } from 'react';
-import $ from 'jquery';
 
 class TodoList extends Component{
     constructor(){
@@ -7,8 +6,10 @@ class TodoList extends Component{
 
         this.state = {
             userInput: '',
-            items: []
+            items: [],
+            addClass: false
         }
+
     }
 
     onChange(event){
@@ -35,21 +36,30 @@ class TodoList extends Component{
     }
 
     doneTodo(item){
-        console.log(item);
+    // event if I do receive the item it is always same result all li receive the changement of state and than the "cssTemporaire" is applied in all li element
+        this.setState({
+            addClass: !this.state.addClass
+        });
+        console.log(this.state.addClass)
+        // return item
     }
 
     renderTodos(){
+        let cssTemporaire = '';
+        if(this.state.addClass){
+            cssTemporaire = ["list-group-item-success"];
+        }
         return this.state.items.map((item) => {
             return(
-                <ul className='list-group-item text-left' key={item}>
+                <li className={`list-group-item ${cssTemporaire}`} key={item}>
                     {item} 
                     <button className='close' onClick={this.deleteTodo.bind(this, item)}>
                     <i className="far fa-times-circle"></i>
                     </button>
                     <button className='close'>
-                        <i className="fas fa-check" onClick={this.doneTodo.bind(this, item)}></i>
+                        <i className='fas fa-check' onClick={this.doneTodo.bind(this)}></i>
                     </button>
-                </ul>
+                </li>
             );
         });
     }
@@ -60,7 +70,8 @@ class TodoList extends Component{
                 <h1>To do List</h1>
                 <form className='form-group'>
                     <input 
-                    className='form-control text-center mb-2'
+                    autoFocus
+                    className='form-control text-center mb-2 '
                     value={this.state.userInput} 
                     type='text' 
                     placeholder='add todo'
@@ -68,9 +79,9 @@ class TodoList extends Component{
                     />
                     <button className='btn btn-primary mb-2' onClick={this.addTodo.bind(this)}>add</button>
                 </form>
-                <div className='list-group'>
+                <ul className='list-group'>
                     {this.renderTodos()}
-                </div>
+                </ul>
             </div>
         );
     }
