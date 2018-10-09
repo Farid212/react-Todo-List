@@ -10,28 +10,30 @@ import {
 import FontAwesomeIcon from 'react-fontawesome';
 
 class TodoList extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
 
         this.state = {
             userInput: '',
             items: [],
-            addClass: false
+            addClass: ''
         }
 
     }
 
+
     onChange(event){
         this.setState({
             userInput: event.target.value
-        }, ()=> console.log(this.state.userInput));
+        });
     }
 
     addTodo(event){
         event.preventDefault();
         this.setState({
             userInput: '',
-            items: [...this.state.items, this.state.userInput]
+            items: [...this.state.items, this.state.userInput],
+            addClass: false
         }, ()=> console.log(this.state.items));
     }
 
@@ -44,12 +46,15 @@ class TodoList extends Component{
         });
     }
 
-    doneTodo(){
-    // event if I do receive the item it is always same result all li receive the changement of state and than the "cssTemporaire" is applied in all li element
+    doneTodo(event){
+        const array = this.state.items;
+        const i = array.indexOf(event);
+        let tempoEvent = array[i];
+        console.log(tempoEvent);
+        let currentSituation = this.state.addClass;
         this.setState({
-            addClass: !this.state.addClass
+            addClass: !currentSituation
         });
-        console.log(this.state.addClass)
     }
 
     renderTodos(){
@@ -57,6 +62,7 @@ class TodoList extends Component{
         if(this.state.addClass){
             cssTemporaire = ["list-group-item-success"];
         }
+        
         return this.state.items.map((item) => {
             return(
                 <ListGroupItem className={`text-left ${cssTemporaire}`} key={item}>
