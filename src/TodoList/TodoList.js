@@ -1,4 +1,16 @@
-import React, {Component } from 'react';
+import React, { Component } from 'react';
+import { 
+    Container,
+    ListGroup,
+    ListGroupItem,
+    Button,
+    Form,
+    FormGroup,
+    FormControl,
+    ButtonToolbar
+    
+ } from 'react-bootstrap';
+//  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class TodoList extends Component{
     constructor(){
@@ -35,13 +47,12 @@ class TodoList extends Component{
         });
     }
 
-    doneTodo(item){
+    doneTodo(){
     // event if I do receive the item it is always same result all li receive the changement of state and than the "cssTemporaire" is applied in all li element
         this.setState({
             addClass: !this.state.addClass
         });
         console.log(this.state.addClass)
-        // return item
     }
 
     renderTodos(){
@@ -51,38 +62,39 @@ class TodoList extends Component{
         }
         return this.state.items.map((item) => {
             return(
-                <li className={`list-group-item ${cssTemporaire}`} key={item}>
+                <ListGroupItem className={`text-left ${cssTemporaire}`} key={item}>
                     {item} 
-                    <button className='close' onClick={this.deleteTodo.bind(this, item)}>
-                    <i className="far fa-times-circle"></i>
-                    </button>
-                    <button className='close'>
-                        <i className='fas fa-check' onClick={this.doneTodo.bind(this)}></i>
-                    </button>
-                </li>
+                    <Button className='close' onClick={this.deleteTodo.bind(this, item)}>
+                        <i className="far fa-times-circle"></i>
+                    </Button>
+                    <Button className='close'>
+                        <i className='fas fa-check' onClick={this.doneTodo.bind(this)} />
+                    </Button>
+                </ListGroupItem>
             );
         });
     }
 
     render(){
         return(
-            <div className='container'>
+            <Container>
                 <h1>To do List</h1>
-                <form className='form-group'>
-                    <input 
-                    autoFocus
-                    className='form-control text-center mb-2 '
-                    value={this.state.userInput} 
-                    type='text' 
-                    placeholder='add todo'
-                    onChange={this.onChange.bind(this)} 
-                    />
-                    <button className='btn btn-primary mb-2' onClick={this.addTodo.bind(this)}>add</button>
-                </form>
-                <ul className='list-group'>
+                <Form>
+                    <FormControl
+                        autoFocus
+                        className='text-center mb-2 '
+                        value={this.state.userInput} 
+                        type='text' 
+                        placeholder='add todo'
+                        onChange={this.onChange.bind(this)} 
+                    >
+                    </FormControl>
+                    <Button varriant='primary' type='submit' className='mb-2' onClick={this.addTodo.bind(this)}>add</Button>
+                </Form>
+                <ListGroup>
                     {this.renderTodos()}
-                </ul>
-            </div>
+                </ListGroup>
+            </Container>
         );
     }
 }
