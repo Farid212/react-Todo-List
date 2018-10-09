@@ -5,12 +5,10 @@ import {
     ListGroupItem,
     Button,
     Form,
-    FormGroup,
     FormControl,
-    ButtonToolbar
-    
  } from 'react-bootstrap';
 //  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FontAwesomeIcon from 'react-fontawesome';
 
 class TodoList extends Component{
     constructor(){
@@ -64,12 +62,8 @@ class TodoList extends Component{
             return(
                 <ListGroupItem className={`text-left ${cssTemporaire}`} key={item}>
                     {item} 
-                    <Button className='close' onClick={this.deleteTodo.bind(this, item)}>
-                        <i className="far fa-times-circle"></i>
-                    </Button>
-                    <Button className='close'>
-                        <i className='fas fa-check' onClick={this.doneTodo.bind(this)} />
-                    </Button>
+                    <FontAwesomeIcon name='fas fa-window-close' className='close' onClick={this.deleteTodo.bind(this, item)}/>
+                    <FontAwesomeIcon name='fas fa-check-square' className='close' onClick={this.doneTodo.bind(this, item)} />
                 </ListGroupItem>
             );
         });
