@@ -15,8 +15,9 @@ class TodoList extends Component{
 
         this.state = {
             userInput: '',
+            ID: '',
             items: [],
-            addClass: ''
+            addClass: false
         }
 
     }
@@ -33,8 +34,8 @@ class TodoList extends Component{
         this.setState({
             userInput: '',
             items: [...this.state.items, this.state.userInput],
-            addClass: false
-        }, ()=> console.log(this.state.items));
+            ID: Math.random().toString(16).substr(2, 9)
+        }, ()=> console.log("todo: " + this.state.items +', should be Unique ID: ' + this.state.ID));
     }
 
     deleteTodo(item){
@@ -47,13 +48,14 @@ class TodoList extends Component{
     }
 
     doneTodo(event){
-        const array = this.state.items;
-        const i = array.indexOf(event);
-        let tempoEvent = array[i];
-        console.log(tempoEvent);
-        let currentSituation = this.state.addClass;
+        console.log(event);
+        // const array = this.state.items;
+        // const i = array.indexOf(event);
+        // let tempoEvent = array[i];
+        // console.log(tempoEvent);
+        
         this.setState({
-            addClass: !currentSituation
+            addClass: !this.state.addClass
         });
     }
 
@@ -65,7 +67,7 @@ class TodoList extends Component{
         
         return this.state.items.map((item) => {
             return(
-                <ListGroupItem className={`text-left ${cssTemporaire}`} key={item}>
+                <ListGroupItem as='li' className={`text-left ${cssTemporaire}`}  key={this.state.ID}>
                     {item} 
                     <FontAwesomeIcon name='fas fa-window-close' className='close' onClick={this.deleteTodo.bind(this, item)}/>
                     <FontAwesomeIcon name='fas fa-check-square' className='close' onClick={this.doneTodo.bind(this, item)} />
@@ -90,7 +92,7 @@ class TodoList extends Component{
                     </FormControl>
                     <Button varriant='primary' type='submit' className='mb-2' onClick={this.addTodo.bind(this)}>add</Button>
                 </Form>
-                <ListGroup>
+                <ListGroup as='ul'>
                     {this.renderTodos()}
                 </ListGroup>
             </Container>
