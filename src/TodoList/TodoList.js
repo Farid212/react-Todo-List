@@ -15,11 +15,10 @@ class TodoList extends Component{
 
         this.state = {
             userInput: '',
-            ID: '',
             items: [],
-            addClass: false
+            completed: false,
+            ID: Math.random().toString(32).substr(2)
         }
-
     }
 
 
@@ -33,9 +32,10 @@ class TodoList extends Component{
         event.preventDefault();
         this.setState({
             userInput: '',
-            items: [...this.state.items, this.state.userInput],
-            ID: Math.random().toString(16).substr(2, 9)
-        }, ()=> console.log("todo: " + this.state.items +', should be Unique ID: ' + this.state.ID));
+            items: [...this.state.items, this.state.userInput]
+        }, ()=>{
+            console.log(this.state.items + ' - ' + this.state.ID)
+        })
     }
 
     deleteTodo(item){
@@ -47,21 +47,26 @@ class TodoList extends Component{
         });
     }
 
+
+    // https://stackoverflow.com/questions/29420835/how-to-generate-unique-ids-for-form-labels-in-react 
+    // to check later
+
     doneTodo(event){
-        console.log(event);
+
+        console.log(event)
         // const array = this.state.items;
         // const i = array.indexOf(event);
         // let tempoEvent = array[i];
         // console.log(tempoEvent);
         
         this.setState({
-            addClass: !this.state.addClass
+            completed: !this.state.completed
         });
     }
 
     renderTodos(){
         let cssTemporaire = '';
-        if(this.state.addClass){
+        if(this.state.completed){
             cssTemporaire = ["list-group-item-success"];
         }
         
