@@ -8,16 +8,16 @@ import {
     FormControl,
  } from 'react-bootstrap';
 import FontAwesomeIcon from 'react-fontawesome';
+import uuidv1 from 'uuid/v1';
 
 class TodoList extends Component{
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
 
         this.state = {
             userInput: '',
             items: [],
-            completed: false,
-            ID: Math.random().toString(32).substr(2)
+            completed: false
         }
     }
 
@@ -31,12 +31,13 @@ class TodoList extends Component{
     addTodo(event){
         event.preventDefault();
         this.setState({
+            id: this.state.userInput+uuidv1(),
             userInput: '',
-            items: [...this.state.items, this.state.userInput]
-        }, ()=>{
-            console.log(this.state.items + ' - ' + this.state.ID)
-        })
+            items: [...this.state.items, this.state.userInput],
+        })        
     }
+
+   
 
     deleteTodo(item){
         const array = this.state.items;
@@ -47,22 +48,13 @@ class TodoList extends Component{
         });
     }
 
-
-    // https://stackoverflow.com/questions/29420835/how-to-generate-unique-ids-for-form-labels-in-react 
-    // to check later
-
     doneTodo(event){
-
-        console.log(event)
-        // const array = this.state.items;
-        // const i = array.indexOf(event);
-        // let tempoEvent = array[i];
-        // console.log(tempoEvent);
-        
         this.setState({
             completed: !this.state.completed
         });
     }
+
+
 
     renderTodos(){
         let cssTemporaire = '';
@@ -72,10 +64,10 @@ class TodoList extends Component{
         
         return this.state.items.map((item) => {
             return(
-                <ListGroupItem as='li' className={`text-left ${cssTemporaire}`}  key={this.state.ID}>
+                <ListGroupItem as='li' className={`text-left ${cssTemporaire}`} key={item+uuidv1()}>
                     {item} 
                     <FontAwesomeIcon name='fas fa-window-close' className='close' onClick={this.deleteTodo.bind(this, item)}/>
-                    <FontAwesomeIcon name='fas fa-check-square' className='close' onClick={this.doneTodo.bind(this, item)} />
+                    <FontAwesomeIcon name='fas fa-check-square' className='close' onClick={this.doneTodo.bind(this, item+uuidv1())} />
                 </ListGroupItem>
             );
         });
