@@ -37,8 +37,6 @@ class TodoList extends Component{
         })        
     }
 
-   
-
     deleteTodo(item){
         const array = this.state.items;
         const index = array.indexOf(item);
@@ -48,26 +46,39 @@ class TodoList extends Component{
         });
     }
 
-    doneTodo(event){
+    doneTodo(key, item, event){
+        // first log is the "this"
+        console.log(event)
+        // key associate to the todo or "li"
+        console.log('key: '+ key)
+        // your todo added
+        console.log('todo: '+ item)
+        let currentState = this.state.completed;
+        console.log("current state: "+currentState)
         this.setState({
-            completed: !this.state.completed
-        });
+            completed: !currentState
+        }, ()=> console.log("new state: "+ this.state.completed));
     }
 
 
 
     renderTodos(){
-        let cssTemporaire = '';
-        if(this.state.completed){
-            cssTemporaire = ["list-group-item-success"];
-        }
-        
         return this.state.items.map((item) => {
+            let ideaID = this.state.items.indexOf(item);
+            let newKey = ideaID+'_'+uuidv1();
             return(
-                <ListGroupItem as='li' className={`text-left ${cssTemporaire}`} key={item+uuidv1()}>
+                <ListGroupItem as='li' className={`text-left ${this.state.completed ? 'list-group-item-success': null}`} key={newKey}>
                     {item} 
-                    <FontAwesomeIcon name='fas fa-window-close' className='close' onClick={this.deleteTodo.bind(this, item)}/>
-                    <FontAwesomeIcon name='fas fa-check-square' className='close' onClick={this.doneTodo.bind(this, item+uuidv1())} />
+                    <FontAwesomeIcon 
+                        name='fas fa-window-close' 
+                        className='close' 
+                        onClick={this.deleteTodo.bind(this, item)}
+                    />
+                    <FontAwesomeIcon 
+                        name={`fas fa-check-square`} 
+                        className={`close`}
+                        onClick={this.doneTodo.bind(this, newKey, item)} 
+                    />
                 </ListGroupItem>
             );
         });
