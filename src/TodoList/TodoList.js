@@ -2,22 +2,20 @@ import React, { Component } from 'react';
 import { 
     Container,
     ListGroup,
-    ListGroupItem,
     Button,
     Form,
     FormControl,
  } from 'react-bootstrap';
-import FontAwesomeIcon from 'react-fontawesome';
 import uuidv1 from 'uuid/v1';
+import ItemContent from './ItemContent';
 
 class TodoList extends Component{
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
 
         this.state = {
             userInput: '',
             items: [],
-            completed: false
         }
     }
 
@@ -25,6 +23,15 @@ class TodoList extends Component{
     onChange(event){
         this.setState({
             userInput: event.target.value
+        });
+    }
+
+    deleteTodo(item){
+        const array = this.state.items;
+        const index = array.indexOf(item);
+        array.splice(index, 1);
+        this.setState({
+            items: array
         });
     }
 
@@ -37,51 +44,12 @@ class TodoList extends Component{
         })        
     }
 
-    deleteTodo(item){
-        const array = this.state.items;
-        const index = array.indexOf(item);
-        array.splice(index, 1);
-        this.setState({
-            items: array
-        });
-    }
-
-    doneTodo(key, item, event){
-        // first log is the "this"
-        console.log(event)
-        // key associate to the todo or "li"
-        console.log('key: '+ key)
-        // your todo added
-        console.log('todo: '+ item)
-        let currentState = this.state.completed;
-        console.log("current state: "+currentState)
-        this.setState({
-            completed: !currentState
-        }, ()=> console.log("new state: "+ this.state.completed));
-    }
-
-
-
     renderTodos(){
-        return this.state.items.map((item) => {
-            let ideaID = this.state.items.indexOf(item);
-            let newKey = ideaID+'_'+uuidv1();
+        return this.state.items.map((item, index) => {
             return(
-                <ListGroupItem as='li' className={`text-left ${this.state.completed ? 'list-group-item-success': null}`} key={newKey}>
-                    {item} 
-                    <FontAwesomeIcon 
-                        name='fas fa-window-close' 
-                        className='close' 
-                        onClick={this.deleteTodo.bind(this, item)}
-                    />
-                    <FontAwesomeIcon 
-                        name={`fas fa-check-square`} 
-                        className={`close`}
-                        onClick={this.doneTodo.bind(this, newKey, item)} 
-                    />
-                </ListGroupItem>
-            );
-        });
+                <ItemContent key={index} value={item}/>
+            )
+        })
     }
 
     render(){
