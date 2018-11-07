@@ -5,7 +5,7 @@ import {
 
 } from 'react-bootstrap';
 import FontAwesomeIcon from 'react-fontawesome';
-import TodoList from './TodoList';
+// import TodoList from './TodoList';
 
 
 class ItemContent extends Component{
