@@ -17,10 +17,8 @@ class ItemContent extends Component{
     }
 
     deleteTodo(event){
-       let ts = event;
-       console.log(ts)
        let parent = event.currentTarget.parentNode;
-       console.log(parent);
+       parent.className = "d-none"
     }
 
 
