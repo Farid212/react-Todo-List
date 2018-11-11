@@ -5,21 +5,23 @@ import {
 
 } from 'react-bootstrap';
 import FontAwesomeIcon from 'react-fontawesome';
-// import TodoList from './TodoList';
 
 
 class ItemContent extends Component{
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
+
         this.state = {
             completed: false
         }
     }
 
-    deleteTodo(event){
-       let parent = event.currentTarget.parentNode;
-       parent.className = "d-none"
-    }
+    // killTodo(event){
+    //     // console.log(event);
+    //     let parent = event.currentTarget.parentNode;
+    //     // console.log(parent)
+    //     parent.className = "d-none"
+    // }
 
 
 
@@ -31,13 +33,15 @@ class ItemContent extends Component{
     }
 
     render(){
+        const {value, deleteTodo} = this.props;
         
             return (
                 <ListGroupItem as='li' className={`text-left ${this.state.completed ? 'list-group-item-success': null}`}>
+                    {value}
                     <FontAwesomeIcon 
                         name={`fas fa-window-close`}
                         className={`close`}
-                        onClick={this.deleteTodo.bind(this)}
+                        onClick={deleteTodo(value)}
                     />
                     <FontAwesomeIcon 
                         name={`fas fa-check-square`} 
