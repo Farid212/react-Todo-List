@@ -16,12 +16,12 @@ class ItemContent extends Component{
         }
     }
 
-    // killTodo(event){
-    //     // console.log(event);
-    //     let parent = event.currentTarget.parentNode;
-    //     // console.log(parent)
-    //     parent.className = "d-none"
-    // }
+    deleteTodo(event){
+        // console.log(event);
+        let parent = event.currentTarget.parentNode;
+        // console.log(parent)
+        parent.className = "d-none"
+    }
 
 
 
@@ -33,7 +33,7 @@ class ItemContent extends Component{
     }
 
     render(){
-        const {value, deleteTodo} = this.props;
+        const {value} = this.props;
         
             return (
                 <ListGroupItem as='li' className={`text-left ${this.state.completed ? 'list-group-item-success': null}`}>
@@ -41,7 +41,7 @@ class ItemContent extends Component{
                     <FontAwesomeIcon 
                         name={`fas fa-window-close`}
                         className={`close`}
-                        onClick={deleteTodo(value)}
+                        onClick={this.deleteTodo.bind(this)}
                     />
                     <FontAwesomeIcon 
                         name={`fas fa-check-square`} 
