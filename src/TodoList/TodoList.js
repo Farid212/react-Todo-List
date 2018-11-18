@@ -17,6 +17,8 @@ class TodoList extends Component{
             userInput: '',
             items: [],
         }
+        this.deleteTodo = this.deleteTodo.bind(this)
+        this.doneTodo = this.doneTodo.bind(this)
     }
 
 
@@ -35,20 +37,27 @@ class TodoList extends Component{
         });
     }
 
+    doneTodo(item){
+        const array = this.state.items;
+        const index = array.indexOf(item);
+        array[index].isCompleted = !array[index].isCompleted;
+        this.setState({
+            items: array
+        });
+    }
+
     addTodo(event){
         event.preventDefault();
         this.setState({
-            id: this.state.userInput+uuidv1(),
             userInput: '',
-            items: [...this.state.items, this.state.userInput],
+            items: [...this.state.items, {id: this.state.userInput+uuidv1(),value: this.state.userInput,isCompleted: false}],
         })        
     }
 
     renderTodos(){
         return this.state.items.map((item, index) => {
-            console.log(index)
             return(
-                <ItemContent key={index} value={item} />
+                <ItemContent key={index} item={item} doneTodo={this.doneTodo} deleteTodo={this.deleteTodo}/>
             )
         })
     }
