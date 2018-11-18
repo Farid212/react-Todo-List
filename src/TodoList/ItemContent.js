@@ -16,37 +16,21 @@ class ItemContent extends Component{
         }
     }
 
-    deleteTodo(event){
-        // console.log(event);
-        let parent = event.currentTarget.parentNode;
-        // console.log(parent)
-        parent.className = "d-none"
-    }
-
-
-
-    doneTodo(){
-        // console.log(this.state.completed)
-        this.setState({
-            completed: !this.state.completed
-        });
-    }
-
     render(){
-        const {value} = this.props;
+        const {item, doneTodo, deleteTodo} = this.props;
         
             return (
-                <ListGroupItem as='li' className={`text-left ${this.state.completed ? 'list-group-item-success': null}`}>
-                    {value}
+                <ListGroupItem as='li' className={`text-left ${item.isCompleted ? 'list-group-item-success': null}`}>
+                    {item.value}
                     <FontAwesomeIcon 
                         name={`fas fa-window-close`}
                         className={`close`}
-                        onClick={this.deleteTodo.bind(this)}
+                        onClick={()=>{deleteTodo(item)}}
                     />
                     <FontAwesomeIcon 
                         name={`fas fa-check-square`} 
                         className={`close`}
-                        onClick={this.doneTodo.bind(this)}
+                        onClick={()=>{doneTodo(item)}}
                     />
                 </ListGroupItem>
             )
